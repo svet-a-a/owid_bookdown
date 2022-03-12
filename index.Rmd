@@ -1,5 +1,5 @@
 --- 
-title: "Making free books with RStudio’s RMarkdown & Bookdown"
+title: "Test à la con putaint sa mère"
 author: "Julie Lowndes"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 4 Writing in Bookdown | Test à la con putaint sa mère</title>
+  <title>Chapter 3 test | Test à la con putaint sa mère</title>
   <meta name="description" content="A mini bookdown tutorial book on how to make bookdown books." />
   <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 4 Writing in Bookdown | Test à la con putaint sa mère" />
+  <meta property="og:title" content="Chapter 3 test | Test à la con putaint sa mère" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="openscapes/series" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 4 Writing in Bookdown | Test à la con putaint sa mère" />
+  <meta name="twitter:title" content="Chapter 3 test | Test à la con putaint sa mère" />
   
   <meta name="twitter:description" content="A mini bookdown tutorial book on how to make bookdown books." />
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="test.html"/>
-
+<link rel="prev" href="setup.html"/>
+<link rel="next" href="write.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -109,12 +109,29 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="write" class="section level1" number="4">
-<h1><span class="header-section-number">Chapter 4</span> Writing in Bookdown</h1>
-<p>Coming soon:</p>
+<div id="test" class="section level1" number="3">
+<h1><span class="header-section-number">Chapter 3</span> test</h1>
+<ol style="list-style-type: decimal">
+<li>Go to your GitHub account: github.com/username</li>
+<li>Click on Repositories, and the green button “New” to create a new repo</li>
+<li>Name this new repo “awesome-book”</li>
+<li>DO NOT initialize this repo with a README</li>
+<li>Click the green “create repository” button — this will take you to your new repo</li>
+<li>Click the tiny “clone or download” button near the top and COPY URL</li>
+<li>In the Console, type <code>usethis::use_git()</code> and say Yes to the two prompts. This will restart R and give you a new Git tab in the upper right pane.</li>
+<li>Now, click on the Terminal tab next to the Console tab.</li>
+<li>Type git remote add cheese <a href="https://github.com/oswaldoforey/truc.git" class="uri">https://github.com/oswaldoforey/truc.git</a>`</li>
+<li>Type <code>git push --set-upstream cheese master</code></li>
+<li>Go back to github.com/username/“awesome-book” and refresh — our files should be there! But we want it to be a book published as <a href="https://username.github.io/awesome-book" class="uri">https://username.github.io/awesome-book</a>.</li>
+<li>Click Settings</li>
+<li>sur le coté cliquer dans page</li>
+<li>Change the Source pulldown from “None” to “master branch /docs folder”</li>
+<li>It should say “Your site is ready to be published at <a href="https://username.github.io/awesome-book/" class="uri">https://username.github.io/awesome-book/</a>” — click the link to see but error page</li>
+</ol>
 <ul>
-<li>Adding chapters</li>
-<li>Citations</li>
+<li>effacer le readme, le bouton environnement en bas à droite de la page avec une fusée apparait</li>
+<li>cliquer dessus ça marche</li>
+<li>faire un pull, puis une modif et un push et c’est à jour</li>
 </ul>
 
 </div>
@@ -123,8 +140,8 @@
           </div>
         </div>
       </div>
-<a href="test.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="setup.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="write.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -155,7 +172,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/jules32/bookdown-tutorial/edit/master/write.Rmd",
+"link": "https://github.com/jules32/bookdown-tutorial/edit/master/setup.Rmd",
 "text": "Edit"
 },
 "history": {
