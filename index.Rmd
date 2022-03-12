@@ -1,5 +1,5 @@
 --- 
-title: "Test à la con putaint sa mère"
+title: "Test à la con putain sa mère"
 author: "Julie Lowndes"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
