@@ -59,8 +59,22 @@ Now, you're set — you just need to write your book.
 
 As you write your .Rmd files, build the book and commit all files, including the docs/ folder, and your published book will be updated!
 
-
-
-
-
+# test
+1. Go to your GitHub account: github.com/username
+1. Click on Repositories, and the green button "New" to create a new repo
+1. Name this new repo "awesome-book"
+1. DO NOT initialize this repo with a README
+1. Click the green "create repository" button — this will take you to your new repo
+1. Click the tiny "clone or download" button near the top and COPY URL
+1. In the Console, type `usethis::use_git()` and say Yes to the two prompts. This will restart R and give you a new Git tab in the upper right pane.
+1. Now, click on the Terminal tab next to the Console tab. 
+1. Type git remote add cheese https://github.com/oswaldoforey/truc.git`
+1. Type `git push --set-upstream cheese master`
+1. Go back to github.com/username/"awesome-book" and refresh — our files should be there! But we want it to be a book published as https://username.github.io/awesome-book.
+1. Click Settings
+1. sur le coté cliquer dans page
+1. Change the Source pulldown from "None" to "master branch /docs folder"
+1. It should say "Your site is ready to be published at https://username.github.io/awesome-book/" — click the link to see but error page
+- effacer le readme, le bouton environnement en bas à droite de la page avec une fusée apparait
+- cliquer dessus ça marche
 
