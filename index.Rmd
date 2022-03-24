@@ -1,6 +1,6 @@
 --- 
-title: "Test à la con putain sa mère"
-author: "Julie Lowndes"
+title: "Bookdown template"
+author: "Oswaldo Forey, adapté de Julie Lowndes"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 # output: bookdown::gitbook
