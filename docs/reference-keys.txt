@@ -3,4 +3,6 @@ learn-all-about-bookdown
 setup
 démarche-actualisée---24-03-2022
 moving-forward
+quand-on-copie-colle-un-dossier-avec-le-projet-on-a-la-dossier-.git-qui-est-caché-et-cest-pour-ça-que-le-origin-ne-marche-pas
 chapitre-3
+chapitre-de-conclusion-de-la-formation
