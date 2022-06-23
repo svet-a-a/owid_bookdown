@@ -1,8 +1,8 @@
 welcome
-learn-all-about-bookdown
-setup
-démarche-actualisée---24-03-2022
-moving-forward
-quand-on-copie-colle-un-dossier-avec-le-projet-on-a-la-dossier-.git-qui-est-caché-et-cest-pour-ça-que-le-origin-ne-marche-pas
 chapitre-3
+préparation-des-données
+bases-de-données-a-lechelle-mondiale
+bases-de-données-par-pays-et-continent-et-par-pays
+jointure-des-bases-de-données
+base-de-données-avec-de-totaux-par-pays
 chapitre-de-conclusion-de-la-formation
