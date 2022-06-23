@@ -26,7 +26,6 @@ git remote add mon_livre https://github.com/oswaldoforey/mon_livre.git
 16. Si un readem s'est malgré tout créé et que la fusée en bas à droite du tableau de votre repo n'apparait pas, effacer le readme, etle bouton environnement en bas à droite de la page avec une fusée apparait
 17. cliquer dessus ça marche (il faut attendre un peu des fois et recharger la page)
 
-
 ### Modifier son livre et mettre à jour en ligne
 
 Dans le projet du livre, vous pouvez rajouter des chapitres en ouvrant un nouveau rmarkdown et en le sauvegardant dans le dossier du projet. Pour l'ajouter au reste du livre, ouvrir le dossier _bookdown.yml et rajouter le nom du chapitre suivi de .Rmd dans les crochets de la section yaml rmd_files :[""]. Modifiez à l'envie les chapitres existants comme dans un rmarkdown.
