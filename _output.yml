@@ -1,8 +1,8 @@
 bookdown::gitbook:
-  css:
-    - lib/css/bootstrap.min.css
-    - lib/css/style.css
-    - lib/css/lesson.css
+  # css:
+  #   - lib/css/bootstrap.min.css
+  #   - lib/css/style.css
+  #   - lib/css/lesson.css
   includes:
   config:
     toc:
