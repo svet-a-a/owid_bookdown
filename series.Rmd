@@ -1,3 +1,208 @@
+--- 
+title: "L’évolution de la population, la production de nourriture et la consommation d’énergie à l’échelle mondiale"
+author: "Simon et Svetlana"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+# output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+github-repo: openscapes/series
+description: "A mini bookdown tutorial book on how to make bookdown books."
+---
+
+# Description des données {#welcome}
+
+3 fichiers :
+
+1. Consommation d'énergie
+1. production de la nourriture
+1. Population
+
+<!--chapter:end:index.Rmd-->
+
+# Préparation des données 
+
+## Bases de données a l'echelle mondiale
+```{r IMORT, message=FALSE, include=FALSE, results='hide'}
+
+library(flexdashboard)
+library(tidyverse)
+library(readxl)
+library(tidyselect)
+library(countrycode)
+
+```
+
+
+```{r WORLD, echo=TRUE, warning=FALSE, results='hide'}
+
+energy_world<-read_delim("owid-energy-data__OWID.csv") |> 
+  select(1:3, ends_with("consumption")) |> 
+  filter(year>1964 & year< 2020) |> 
+  filter(country=="World")|> 
+  select(3:5,7,8,10,11,12,15,16) |> 
+  pivot_longer(cols = 2:10,
+               names_to = "energy_source",
+               values_to = "energy_source_consumption") |> 
+  replace_na(list(energy_source_consumption = 0)) |> 
+  mutate(energy_type = if_else(condition = str_detect(energy_source, "coal")|
+                                 str_detect(energy_source, "gas")|
+                                 str_detect(energy_source, "oil"),
+                               true = "fossil_fuel_consumption",
+                               false = "low_carbon_consumption"), 
+         .after = energy_source)
+
+write_delim(energy_world, "energy_world.csv", delim = ",")
+  
+
+food_world<-read_delim("Production_Crops_Livestock_E_All_Data.csv") |> 
+  select(!ends_with("F")) |> 
+  rename_with(~ str_remove(., "Y"), 8:67) |> 
+# names(food) <- sub("Y", "", names(food))
+  filter(str_detect(Item, "Total")|str_detect(Item, "Primary")) |>
+  #select(Element) |> distinct()
+  filter(Element=="Production") |> 
+  pivot_longer(cols = 8:67,
+               names_to = "year",
+               values_to = "production") |> 
+  filter(Area == "World") |> 
+  mutate(year=as.numeric(year)) |> 
+  mutate(production = production/1000000) |> 
+  select(4, 7:9)
+
+write_delim(food_world, "food_world.csv", delim = ",")
+
+population_world<-read_excel("WPP2019_POP_F01_1_TOTAL_POPULATION_BOTH_SEXES_UN.xlsx", 
+                       skip=16, na="...") |> 
+  rename(region = 3) |> 
+  filter(region=="WORLD") |> 
+  pivot_longer(cols = 8:78,
+               names_to = "year",
+               values_to = "population_total") |> 
+  mutate(year = as.numeric(year)) |> 
+  mutate(population_total = as.numeric(population_total)/1000000) |> 
+  select(8,9)
+
+write_delim(population_world, "population_world.csv", delim = ",")
+
+
+```
+
+## Bases de données par pays et continent et par pays
+
+```{r COUNTRY, echo=TRUE, warning=FALSE, results='hide'}
+
+energy_continent<-read_delim("owid-energy-data__OWID.csv") |> 
+  select(1:3, ends_with("consumption")) |> 
+  filter(year>1964 & year< 2020) |> 
+  select(2:5,7,8,10,11,12,15,16) |> 
+  pivot_longer(cols = 3:11,
+               names_to = "energy_source",
+               values_to = "energy_source_consumption") |> 
+  replace_na(list(energy_source_consumption = 0)) |> 
+  mutate(energy_type = if_else(condition = str_detect(energy_source, "coal")|
+                                 str_detect(energy_source, "gas")|
+                                 str_detect(energy_source, "oil"),
+                               true = "fossil_fuel_consumption",
+                               false = "low_carbon_consumption"), 
+         .after = energy_source) |>
+  mutate(iso_code=countrycode(country, 
+                              origin = "country.name",
+                              destination = "iso3c"),
+         .before = country) |>
+  drop_na(iso_code) |> 
+  select(1,3:6)
+    
+guess_encoding("Production_Crops_Livestock_E_All_Data.csv")
+
+food_continent<-read_delim("Production_Crops_Livestock_E_All_Data.csv",
+                           locale = locale(encoding = "ISO-8859-1")) |> 
+  select(!ends_with("F")) |> 
+  rename_with(~ str_remove(., "Y"), 8:67) |> 
+  filter(str_detect(Item, "Total")|str_detect(Item, "Primary")) |>
+  filter(Element=="Production") |> 
+  pivot_longer(cols = 8:67,
+               names_to = "year",
+               values_to = "production") |> 
+  mutate(year=as.numeric(year)) |> 
+  mutate(production = production/1000000) |> 
+  rename(country = 2) |> 
+  filter(!str_detect(country, "China,")) |> 
+  #filter(continent=="Asia") |> 
+  #filter(str_detect(country,"China")) |> 
+  #group_by(country, Item) |> 
+  #summarise(total = sum(production)) 
+  mutate(iso_code = countrycode(country, 
+                               origin = "country.name", 
+                               destination = "iso3c"),
+        .before = country) |>
+  drop_na(iso_code) |> 
+  select(2,5,9,10)
+
+population_continent<-read_excel("WPP2019_POP_F01_1_TOTAL_POPULATION_BOTH_SEXES_UN.xlsx", 
+                       skip=16, na="...") |> 
+  rename(country = 3) |> 
+  pivot_longer(cols = 8:78,
+               names_to = "year",
+               values_to = "population_total") |> 
+  mutate(year = as.numeric(year)) |> 
+  mutate(population_total = as.numeric(population_total)/1000000) |> 
+  filter(!str_detect(country, "China,")) |>
+  filter(!str_detect(country, "excluding")) |> 
+  mutate(iso_code = countrycode(country, 
+                                origin = "country.name", 
+                                destination = "iso3c"),
+         .before = country) |> 
+  drop_na(iso_code) |> 
+  select(3,9,10)
+
+```
+
+
+## Jointure des bases de données
+
+```{r JOIN, echo=TRUE, warning=FALSE, results='hide'}
+
+df_country<-full_join(energy_continent, food_continent, by = c("iso_code" = "iso_code", "year" = "year")) |> 
+  full_join(population_continent, by = c("iso_code" = "iso_code",
+                                         "year" = "year")) |> 
+  mutate(country = countrycode(iso_code, origin = "iso3c", destination = "country.name"), .before = year) |> 
+  filter(!is.na(iso_code)) |> 
+  mutate(continent=countrycode(iso_code, 
+                               origin = "iso3c", 
+                               destination = "continent"),
+                               .after = country)
+
+write_delim(df_country, "owid_country.csv", delim = ",")
+
+```
+
+## Base de données avec de totaux par pays
+
+```{r JOIN TOTALS, echo=TRUE, warning=FALSE, results='hide'}
+
+energy_total<-energy_continent |> 
+  group_by(iso_code, year) |> 
+  summarise(energy_total = sum(energy_source_consumption, na.rm=TRUE))
+
+food_total<-food_continent |> 
+  group_by(iso_code, year) |> 
+  summarise(production_total = sum(production, na.rm=TRUE))
+
+df_total<-full_join(energy_total, food_total, by = c("iso_code" = "iso_code", "year" = "year")) |> 
+  full_join(population_continent, by = c("iso_code" = "iso_code",
+                                         "year" = "year")) |> 
+  mutate(country = countrycode(iso_code, origin = "iso3c", destination = "country.name"), .before = year)
+
+write_delim(df_total, "owid_total.csv", delim = ",")
+
+```
+
+
+<!--chapter:end:Preparation_donnees.Rmd-->
+
 
 
 ```{r setup, include=FALSE}
@@ -376,3 +581,6 @@ df_carte |>
 
 ```
  
+
+<!--chapter:end:owid_dashboard.Rmd-->
+
