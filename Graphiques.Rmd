@@ -23,7 +23,7 @@ df_country<-read_delim("owid_country.csv")
 
 # Analyse mondiale
 
-### Consommation d'energie par source et par source 
+## Consommation d'energie par source et par source 
 
 ```{r echo=FALSE, warning=FALSE}
 
@@ -42,7 +42,7 @@ ggplot(energy_world)+
 
 ```
 
-### Consommation d'energie parsource et par type 
+## Consommation d'energie parsource et par type 
 
 ```{r echo=FALSE}
 
@@ -62,7 +62,7 @@ ggplot(energy_world)+
 ```
 
 
-###  Le graphique de la production mondiale de la nourriture
+##  Le graphique de la production mondiale de la nourriture
 
 ```{r echo=FALSE}
 
@@ -81,7 +81,7 @@ ggplot(food_world)+
 ```
 
 
-### Le graphique de la population mondiale 
+## Le graphique de la population mondiale 
 
 ```{r echo=FALSE}
 
@@ -102,7 +102,7 @@ ggplot(population_world)+
 # Par continent
 
 
-### Consommation d'energie par source et par type
+## Consommation d'energie par source et par type
 
 ```{r echo=FALSE}
 df_country |> 
@@ -128,7 +128,7 @@ ggplot()+
 
 ```
 
-### Consommation d'energie par source 
+## Consommation d'energie par source 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -155,7 +155,7 @@ ggplot()+
 ```
 
 
-###  Le graphique de la production de la nourriture 
+##  Le graphique de la production de la nourriture 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -182,7 +182,7 @@ ggplot()+
 ```
 
 
-### Le graphique de la population 
+## Le graphique de la population 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -211,7 +211,7 @@ ggplot()+
 # Par pays (France)
 
 
-### Consommation d'energie par source et par type 
+## Consommation d'energie par source et par type 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -236,7 +236,7 @@ ggplot()+
 
 ```
 
-### Consommation d'energie par source 
+## Consommation d'energie par source 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -261,7 +261,7 @@ ggplot()+
 ```
 
 
-###  Le graphique de la production de la nourriture 
+##  Le graphique de la production de la nourriture 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -285,7 +285,7 @@ ggplot()+
 
 ```
 
-### Le graphique de la population 
+## Le graphique de la population 
 
 ```{r echo=FALSE}
 df_country |> 
@@ -341,7 +341,7 @@ df_carte <- world_map |>
 
 
 
-### La carte de la consommation d'energie 
+## La carte de la consommation d'energie 
 
 ```{r CARTE1, echo=FALSE}
 
@@ -359,7 +359,7 @@ df_carte |>
 
 
 
-###  La carte de la production de la nourriture
+##  La carte de la production de la nourriture
 
 ```{r CARTE2, echo=FALSE}
 df_carte |> 
@@ -374,7 +374,7 @@ df_carte |>
 ```
 
 
-### La carte de la population 
+## La carte de la population 
 
 ```{r CARTE3, echo=FALSE}
 df_carte |> 
