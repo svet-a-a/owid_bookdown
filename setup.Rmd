@@ -28,5 +28,7 @@ git remote add mon_livre https://github.com/oswaldoforey/mon_livre.git
 
 ### Modifier son livre et mettre à jour en ligne
 
+https://svet-a-a.github.io/owid_bookdown/
+
 Dans le projet du livre, vous pouvez rajouter des chapitres en ouvrant un nouveau rmarkdown et en le sauvegardant dans le dossier du projet. Pour l'ajouter au reste du livre, ouvrir le dossier _bookdown.yml et rajouter le nom du chapitre suivi de .Rmd dans les crochets de la section yaml rmd_files :[""]. Modifiez à l'envie les chapitres existants comme dans un rmarkdown.
 Lorsque vous avez finalisé votre travail, aller dans l'onglet Build et cliquer sur Build Book pour générer les fichiers html utilisé par github. Puis aller dans l'onglet Git, cliquer sur Commit et  dans la fenêtre qui s'ouvre sélectionner tous les dossiers dans la fenêtre en haut à gauche et metter dans la fenêtre en haut à droite la description des changements (c'est votre commit) et cliquer sur commit. Cliquer enfin sur push (la flèche verte), cela enverra les changements sur github.  
