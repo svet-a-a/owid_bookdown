@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: inline
+---
 
 
 ```{r setup, include=FALSE}
@@ -314,7 +319,7 @@ ggplot()+
 
 ```{r SHINY, echo=FALSE}
 
-knitr::include_app(" https://svet-arn.shinyapps.io/Energy_population/", height = "800px")
+knitr::include_app(" https://svet-arn.shinyapps.io/app_graphiques/", height = "800px")
 
 ```
 
