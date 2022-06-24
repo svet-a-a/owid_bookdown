@@ -1,3 +1,11 @@
+
+```{r echo=FALSE}
+
+knitr::include_graphics(rep("images/image.png", 4))
+
+```
+
+
 # Préparation des données 
 
 ## Bases de données a l'echelle mondiale
