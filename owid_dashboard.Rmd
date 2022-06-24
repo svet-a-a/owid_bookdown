@@ -1,0 +1,401 @@
+---
+author: Simon et Svetlana
+date: "`r format(Sys.time(), '%d %B %Y')`"
+title: La population, la production de nourriture et la consommation d’énergie à l’échelle mondiale
+output:
+  flexdashboard::flex_dashboard:
+    css: style.css
+    theme: 
+      version: 4
+      bootswatch: minty
+    orientation: column
+    vertical_layout: fill
+    
+runtime: shiny
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(include = FALSE)
+library(flexdashboard)
+library(tidyverse)
+library(readxl)
+library(tidyselect)
+library(countrycode)
+
+# chargement des  tableaux 
+
+energy_world<-read_delim("energy_world.csv") 
+ 
+food_world<-read_delim("food_world.csv")
+
+population_world<-read_delim("population_world.csv")
+
+df_country<-read_delim("owid_country.csv")
+```
+
+# Analyse mondiale
+
+## Column 1 {data-width=350, .tabset}
+
+### Consommation d'energie par source et par source { .first-box }
+
+```{r echo=FALSE}
+
+ggplot(energy_world)+
+  aes(year, energy_source_consumption, fill = energy_source)+
+  geom_col() +
+  labs(title = "Consommation d'energie par source", 
+       x = "Année", 
+       y = "Consommation")+
+  scale_x_continuous(limits = c(1965, 2020),
+                     breaks = seq(1965,2020,10)) +
+  scale_y_continuous(limits = c(0, 170000),
+                     breaks = seq(0,170000,10000))+
+  theme_dark()
+
+
+```
+
+### Consommation d'energie parsource et par type { .second-box }
+
+```{r echo=FALSE}
+
+ggplot(energy_world)+
+  aes(year, energy_source_consumption, fill = energy_source)+
+  geom_col() +
+  labs(title = "Consommation d'energie par source et par type", 
+       x = "Année", 
+       y = "Consommation")+
+  scale_x_continuous(limits = c(1965, 2020),
+                     breaks = seq(1965,2020,10)) +
+  scale_y_continuous(limits = c(0, 150000),
+                     breaks = seq(0,150000,10000))+
+  theme_dark()+
+  facet_grid(~energy_type)
+
+```
+
+## Column 2 {data-width=350}
+
+###  Le graphique de la production mondiale de la nourriture { .third-box }
+
+```{r echo=FALSE}
+
+ggplot(food_world)+
+  aes(year, production, fill = Item)+
+  geom_col()+
+  labs(title = "Production de la nourriture", 
+       x = "Année", 
+       y = "Production en millions de tonnes")+
+  scale_x_continuous(limits = c(1960, 2020),
+                     breaks = seq(1960,2020,10))+
+  scale_y_continuous(limits = c(0, 10000),
+                     breaks = seq(0,10000,1000))+
+  theme_dark()
+
+```
+
+## Column 3 {data-width=350}
+### Le graphique de la population mondiale { .fourth-box }
+
+```{r echo=FALSE}
+
+ggplot(population_world)+
+  aes(year, population_total )+
+  geom_col(fill = "LightSeaGreen")+
+  labs(title = "Population mondiale", 
+       x = "Année", 
+       y = "Population en milliards")+
+  scale_x_continuous(limits = c(1950, 2020),
+                     breaks = seq(1950,2020,10)) +
+  scale_y_continuous(limits = c(0, 8),
+                     breaks = seq(0,8,1))+
+  theme_dark()
+
+```
+
+# Par continent
+
+## Column 1 {data-width=350, .tabset, .first-box}
+
+### Consommation d'energie par source et par type { .first-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, year, energy_source, energy_type, continent, energy_source_consumption) |> 
+  summarise(energy = mean(energy_source_consumption, na.rm=TRUE)) |> 
+  drop_na(energy) |> 
+ggplot()+
+  aes(year, energy, fill = energy_source)+
+  geom_col() +
+  labs(title = "Consommation d'energie par source et type", 
+       x = "Année", 
+       y = "Consommation")+
+  scale_x_continuous(limits = c(1965, 2020),
+                     breaks = seq(1965,2020,20)) +
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))+
+  scale_y_continuous(limits = c(0, 80000),
+                     breaks = seq(0,80000,10000))+
+  facet_grid(energy_type~continent)
+
+```
+
+### Consommation d'energie par source { .second-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, continent, year, energy_source, energy_type, energy_source_consumption) |> 
+  summarise(energy = mean(energy_source_consumption, na.rm=TRUE)) |> 
+  drop_na(energy) |> 
+ggplot()+
+  aes(year, energy, fill = energy_source)+
+  geom_col() +
+  labs(title = "Consommation d'energie par source", 
+       x = "Année", 
+       y = "Consommation")+
+  scale_x_continuous(limits = c(1965, 2020),
+                     breaks = seq(1965,2020,20)) +
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))+
+  scale_y_continuous(limits = c(0, 80000),
+                     breaks = seq(0,80000,10000))+
+  facet_grid(~continent)
+
+```
+
+## Column 2 {data-width=350}
+
+###  Le graphique de la production de la nourriture { .third-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, continent, year, Item, production) |> 
+  summarise(production = mean(production, na.rm=TRUE)) |> 
+  drop_na(production) |>
+ggplot()+
+  aes(year, production, fill = Item)+
+  geom_col()+
+  labs(title = "Production de la nourriture par continent", 
+       x = "Année", 
+       y = "Production en millions de tonnes")+
+  scale_x_continuous(limits = c(1960, 2020),
+                     breaks = seq(1960,2020,30))+
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))+
+  scale_y_continuous(limits = c(0, 5000),
+                     breaks = seq(0, 5000,1000))+
+  facet_grid(~continent)
+
+```
+
+## Column 3 {data-width=350}
+### Le graphique de la population { .fourth-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, continent, year, population_total) |> 
+  summarise(population = mean(population_total, na.rm=TRUE)) |> 
+  drop_na(population) |>
+ggplot()+
+  aes(year, population_total )+
+  geom_col(fill = "lightblue")+
+  labs(title = "Population par continent", 
+       x = "Année", 
+       y = "Population en milliards")+
+  scale_x_continuous(limits = c(1950, 2020),
+                     breaks = seq(1950,2020,20))+
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))+
+  # scale_y_continuous(limits = c(0, 5),
+  #                    breaks = seq(0,5,1))+
+  facet_grid(~continent)
+
+```
+  
+# Par pays (France)
+
+## Column 1 {data-width=350, .tabset}
+
+### Consommation d'energie par source et par type { .first-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, year, energy_source, energy_type, continent, energy_source_consumption) |> 
+  summarise(energy = mean(energy_source_consumption, na.rm=TRUE)) |> 
+  drop_na(energy) |>
+  filter(country=="France") |> 
+ggplot()+
+  aes(year, energy, fill = energy_source)+
+  geom_col() +
+  labs(title = "Consommation d'energie par source et type en France", 
+       x = "Année", 
+       y = "Consommation")+
+  scale_x_continuous(limits = c(1965, 2020),
+                     breaks = seq(1965,2020,10)) +
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))+
+  facet_grid(~energy_type)
+
+```
+
+### Consommation d'energie par source { .second-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, continent, year, energy_source, energy_type, energy_source_consumption) |> 
+  summarise(energy = mean(energy_source_consumption, na.rm=TRUE)) |> 
+  drop_na(energy) |>
+  filter(country=="France") |> 
+ggplot()+
+  aes(year, energy, fill = energy_source)+
+  geom_col() +
+  labs(title = "Consommation d'energie par source en France", 
+       x = "Année", 
+       y = "Consommation")+
+  scale_x_continuous(limits = c(1965, 2020),
+                     breaks = seq(1965,2020,10)) +
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))
+
+```
+
+## Column 2 {data-width=350}
+
+###  Le graphique de la production de la nourriture { .third-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, continent, year, Item, production) |> 
+  summarise(production = mean(production, na.rm=TRUE)) |> 
+  drop_na(production) |>
+  filter(country=="France") |> 
+ggplot()+
+  aes(year, production, fill = Item)+
+  geom_col()+
+  labs(title = "Production de la nourriture en France", 
+       x = "Année", 
+       y = "Production en millions de tonnes")+
+  scale_x_continuous(limits = c(1960, 2020),
+                     breaks = seq(1960,2020,10))+
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))
+
+```
+
+## Column 3 {data-width=350}
+### Le graphique de la population { .fourth-box }
+
+```{r echo=FALSE}
+df_country |> 
+  group_by(country, continent, year, population_total) |> 
+  summarise(population = mean(population_total, na.rm=TRUE)) |> 
+  drop_na(population) |>
+  filter(country=="France") |> 
+ggplot()+
+  aes(year, population_total )+
+  geom_col(fill = "orchid")+
+  labs(title = "Population en France", 
+       x = "Année", 
+       y = "Population en milliards")+
+  scale_x_continuous(limits = c(1950, 2020),
+                     breaks = seq(1950,2020,10))+
+  theme_dark()+
+  theme(axis.text.x = element_text(size = 10,
+                                 angle = 45,
+                                 hjust = 1,
+                                 vjust = 1))
+
+```
+ 
+# Cartes
+
+```{r CODE CARTE, include=FALSE}
+df_total<-read_delim("owid_total.csv") |> 
+  filter(year=="2019")
+
+world_map<-map_data("world") |> 
+  mutate(iso_code = countrycode(region, 
+                                origin = "country.name", 
+                                destination = "iso3c")) |> 
+  drop_na(iso_code)
+
+df_carte <- world_map |> 
+  mutate(group = factor(group),
+         region = factor(region)) |> 
+  left_join(df_total, by = c("iso_code" = "iso_code"))
+
+
+```
+
+
+## Column 1 {data-width=350}
+
+### La carte de la consommation d'energie { .first-box }
+
+```{r CARTE1, echo=FALSE}
+
+df_carte |> 
+  ggplot()+
+  aes(long, lat, group = group)+
+  geom_polygon(aes(fill = energy_total))+
+  theme_void()+
+  theme(plot.background = element_rect(fill="azure"))+
+  scale_fill_gradient(high="LightSeaGreen",low="DarkSeaGreen")
+
+
+```
+
+
+## Column 2 {data-width=350}
+
+###  La carte de la production de la nourriture { .third-box }
+
+```{r CARTE2, echo=FALSE}
+df_carte |> 
+  ggplot()+
+  aes(long, lat, group = group)+
+  geom_polygon(aes(fill = production_total))+
+  theme_void()+
+  theme(plot.background = element_rect(fill="lightblue"))+
+  scale_fill_gradient(high="darkGreen",low="Green")
+
+
+```
+
+## Column 3 {data-width=350}
+### La carte de la population { .fourth-box }
+
+```{r CARTE3, echo=FALSE}
+df_carte |> 
+  ggplot()+
+  aes(long, lat, group = group)+
+  geom_polygon(aes(fill = population_total))+
+  theme_void()+
+  theme(plot.background = element_rect(fill="lightgreen"))+
+  scale_fill_gradient(high="tomato",low="wheat")
+
+```
+ 

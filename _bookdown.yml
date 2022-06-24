@@ -4,7 +4,7 @@ language:
     chapter_name: "Chapter "
 rmd_files: [
   "index.Rmd",
-  "chapitre_3.Rmd",
-  "chapitre_4.Rmd"]
+  "Preparation_donnees.Rmd",
+  "owid_dashboard.Rmd"]
 delete_merged_file: true 
 output_dir: "docs"

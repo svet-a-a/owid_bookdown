@@ -13,6 +13,8 @@ https://github.com/oswaldoforey/mon_livre.git
 
 ### Installer l'onglet git dans RStudio
 
+Open project_template!!!!!
+
 7. Dans la console, taper usethis::use_git() et dire Yes aux deux demandes. Cela redémarre R et installer l'onglet git dans la fenêtre environnement.
 8. Cliquer ensuite dans l'onglet terminal de la fenêtre console pour ouvrir le terminal. 
 9. Taper git remote add suivi du nom que vous souhaitez donner à la connection suivi de l'uril github de votre repo copiée précedémment, soit quelque chose comme:
