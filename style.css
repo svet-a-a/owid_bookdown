@@ -1,26 +1,28 @@
 h1.title {
-  font-size: 22px;
+  font-size: 32px;
   text-align: center;
-  color: salmon;
+  color: #42b883;
   font-weight:bold;
-  font-family: "Times New Roman"
+  font-family: "Lucida Handwriting";
 }
 h1 { 
   font-size: 22px;
   text-align: center;
-  color: Gold;
+  color: #347474;
   font-weight:bold;
+  font-family: "Lucida Handwriting";
 }
 h2, h3 {
   font-size: 18px;
   text-align: center;
-  color: navy;
+  color: #35495e;
+  font-family: "Lucida Handwriting";
 }
 
 body{ 
   background-color: DarkSeaGreen;
   font-size: 11px;
-  color: SandyBrown;
+  color: #ff7e67;
   }
 
 

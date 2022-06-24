@@ -368,7 +368,7 @@ df_carte |>
   geom_polygon(aes(fill = production_total))+
   theme_void()+
   theme(plot.background = element_rect(fill="lightblue"))+
-  scale_fill_gradient(high="darkGreen",low="Green")
+  scale_fill_gradient(high="SaddleBrown",low="PeachPuff")
 
 
 ```
@@ -383,7 +383,7 @@ df_carte |>
   geom_polygon(aes(fill = population_total))+
   theme_void()+
   theme(plot.background = element_rect(fill="lightgreen"))+
-  scale_fill_gradient(high="tomato",low="wheat")
+  scale_fill_gradient(high="DarkSeaGreen",low="LightYellow")
 
 ```
  

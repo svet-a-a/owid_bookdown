@@ -3,6 +3,7 @@
 ## Bases de données a l'echelle mondiale
 ```{r IMORT, message=FALSE, include=FALSE, results='hide'}
 
+
 library(flexdashboard)
 library(tidyverse)
 library(readxl)
